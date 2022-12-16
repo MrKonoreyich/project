@@ -1,0 +1,28 @@
+#root {
+    text-align: center;
+}
+
+body {
+    background: linear-gradient(#eb5757, #bc57eb) fixed;
+}
+
+.loginForm {
+    border: 1px solid black;
+}
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.box {
+    width: 300px;
+    height: 250px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: linear-gradient(#49e3c7, #b2e349);
+}
