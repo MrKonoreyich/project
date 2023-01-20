@@ -70,6 +70,11 @@ class UserController {
             next(e);
         }
     }
+
+    async setData(req, res, next) {
+        res.send(req.body)
+        console.log(req.body)
+    }
 }
 
 
