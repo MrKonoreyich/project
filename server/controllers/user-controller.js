@@ -1,6 +1,7 @@
 const userService = require('../service/user-service');
 const {validationResult} = require('express-validator');
 const ApiError = require('../exceptions/api-error');
+const Data = require('../models/data-model')
 
 class UserController {
     async registration(req, res, next) {
@@ -74,6 +75,7 @@ class UserController {
     async setData(req, res, next) {
         res.send(req.body)
         console.log(req.body)
+        await Data.create({name: req.body.name, age: req.body.age});
     }
 }
 
