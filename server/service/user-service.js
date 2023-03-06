@@ -1,10 +1,12 @@
 const UserModel = require('../models/user-model');
+const DataSchema = require("../models/data-model")
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const mailService = require('./mail-service');
 const tokenService = require('./token-service');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/api-error');
+const {randomBytes} = require("crypto")
 
 class UserService {
     async registration(email, password) {
@@ -15,8 +17,8 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 3);
         const activationLink = uuid.v4(); // v34fa-asfasf-142saf-sa-asf
 
-        const user = await UserModel.create({email, password: hashPassword, activationLink})
-        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
+        const user = await UserModel.create({email, password: hashPassword, activationLink, setAccess})
+        //await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
         const userDto = new UserDto(user); // id, email, isActivated
         const tokens = tokenService.generateTokens({...userDto});
@@ -73,8 +75,16 @@ class UserService {
     }
 
     async getAllUsers() {
-        const users = await UserModel.find();
+        const users = await DataSchema.find({});
         return users;
+    }
+
+    async getAllUniqs(uniq) {
+        return DataSchema.find({"uniq_id": uniq});
+    }
+
+    async getInfo(id) {
+        return DataSchema.find({"uniq_id": id});
     }
 }
 

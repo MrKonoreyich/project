@@ -4,21 +4,50 @@ import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import {IUser} from "./models/IUser";
 import UserService from "./services/UserService";
+import {DataRes} from "./models/DataRes";
 
 const App: FC = () => {
     const {store} = useContext(Context);
-    const [users, setUsers] = useState<IUser[]>([]);
+    const [uniq_ids, setUniq] = useState<String[]>();
+    const [seeData, setSeeData] = useState(false);
+    const [seeUniqs, setSeeUniqs] = useState(true);
+    const [info, setInfo] = useState<DataRes[]>([]);
+    const [data, setData] = useState<DataRes[]>([]);
+    let a: String[] = [];
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
             store.checkAuth()
         }
     }, [])
-
     async function getUsers() {
         try {
-            const response = await UserService.fetchUsers();
-            setUsers(response.data);
+            const response = await UserService.fetchIds();
+            response.data.forEach(data => {
+                if (!a.includes(data.uniq_id)) {
+                    a.push(data.uniq_id);
+                }
+            });
+            setUniq(a);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function getUniqs(id: String) {
+        try {
+            const res = await  UserService.fetchuniqs(id);
+            setInfo(res.data)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async function getInfo(id: String) {
+        try {
+            const res = await UserService.fetchInfo(id);
+            setData(res.data)
+            return
         } catch (e) {
             console.log(e);
         }
@@ -37,16 +66,15 @@ const App: FC = () => {
     }
 
     return (
-        <div>
+        <div className={"main"}>
             <h1>{store.isAuth ? `Пользователь авторизован ${store.user.email}` : 'АВТОРИЗУЙТЕСЬ'}</h1>
-            <h1>{store.user.isActivated ? 'Аккаунт подтвержден по почте' : 'ПОДТВЕРДИТЕ АККАУНТ!!!!'}</h1>
             <button onClick={() => store.logout()}>Выйти</button>
             <div>
-                <button onClick={getUsers}>Получить пользователей</button>
+                <button onClick={getUsers}>Получить данные</button>
             </div>
-            {users.map(user =>
-                <div key={user.email}>{user.email}</div>
-            )}
+            {seeUniqs && uniq_ids?.map(uniq_id =>
+            <button onClick={e => {setSeeUniqs(!seeUniqs); setSeeData(!seeData); getUniqs(uniq_id); getInfo(uniq_id)}}>{uniq_id}</button>)}
+            {seeData && data.forEach(data => <div>{data.temperature}</div>)}
         </div>
     );
 };

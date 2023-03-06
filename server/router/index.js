@@ -15,5 +15,7 @@ router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/users', authMiddleware, userController.getUsers);
 router.post('/data', userController.setData);
+router.post('/uniqs', userController.getUniqs);
+router.post('/info', userController.getInfo);
 
 module.exports = router;

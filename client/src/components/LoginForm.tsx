@@ -24,7 +24,7 @@ const LoginForm: FC = () => {
                         type="password"
                         placeholder='Пароль'
                     /></p>
-                    <button onClick={(e) => {
+                    <button className={"btn btn-primary"} onClick={(e) => {
                         e.preventDefault();
                         store.login(email, password);
                     }}>

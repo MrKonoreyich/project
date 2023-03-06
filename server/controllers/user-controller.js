@@ -63,7 +63,7 @@ class UserController {
     }
 
     async getUsers(req, res, next) {
-        if(req.user.isAdmin !== true) return undefined;
+        if(req.user.isAdmin !== true) return false;
         try {
             const users = await userService.getAllUsers();
             return res.json(users);
@@ -73,9 +73,33 @@ class UserController {
     }
 
     async setData(req, res, next) {
-        res.send(req.body)
-        console.log(req.body)
-        await Data.create({name: req.body.name, age: req.body.age});
+        await Data.create({
+            uniq_id: req.body.uniq_id,
+            longitude: req.body.latitude,
+            latitude: req.body.latitude,
+            temperature: req.body.temperature,
+            date: req.body.date
+        });
+    }
+
+    async getUniqs(req,res,next) {
+        try {
+            const uniqs = await userService.getAllUniqs(req.body.uniq_id);
+            return res.json(uniqs);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    async getInfo(req,res,next) {
+        try {
+            const info = await userService.getInfo(req.body.uniq);
+            console.log(req.body);
+            return res.json(info);
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 

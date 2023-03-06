@@ -26,3 +26,11 @@ body {
     border-radius: 10px;
     background: linear-gradient(#49e3c7, #b2e349);
 }
+
+table {
+    border: 1px solid black;
+}
+
+td th {
+    border: 1px solid black;
+}
