@@ -2,7 +2,7 @@ import axios from 'axios';
 import {AuthResponse} from "../models/response/AuthResponse";
 import {store} from "../index";
 import {IUser} from "../models/IUser";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 export const API_URL = `http://localhost:5000/api`
 
 const $api = axios.create({

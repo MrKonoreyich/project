@@ -1,9 +1,9 @@
+
 #root {
     text-align: center;
 }
 
 body {
-    background: linear-gradient(#eb5757, #bc57eb) fixed;
 }
 
 .loginForm {
@@ -24,7 +24,7 @@ body {
     height: 250px;
     border: 1px solid black;
     border-radius: 10px;
-    background: linear-gradient(#49e3c7, #b2e349);
+    background: #ada8a8;
 }
 
 table {

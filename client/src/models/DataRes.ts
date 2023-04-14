@@ -1,9 +1,9 @@
 export interface DataRes {
-    _id: String,
-    uniq_id: String,
-    longitude: String,
-    latitude: String,
-    temperature: String,
-    date: String,
+    _id: string,
+    uniq_id: string,
+    longitude: string,
+    latitude: string,
+    temperature: string,
+    date: string,
 
 };

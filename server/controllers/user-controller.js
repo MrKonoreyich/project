@@ -95,7 +95,6 @@ class UserController {
     async getInfo(req,res,next) {
         try {
             const info = await userService.getInfo(req.body.uniq);
-            console.log(req.body);
             return res.json(info);
         } catch (e) {
             console.log(e);
